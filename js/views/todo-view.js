@@ -22,7 +22,8 @@ var app = app || {};
 			'click .destroy': 'clear',
 			'keypress .edit': 'updateOnEnter',
 			'keydown .edit': 'revertOnEscape',
-			'blur .edit': 'close'
+			'blur .edit': 'close',
+			'change .select-priority': 'changePriority'
 		},
 
 		// The TodoView listens for changes to its model, re-rendering. Since
@@ -52,6 +53,7 @@ var app = app || {};
 			this.$el.toggleClass('completed', this.model.get('completed'));
 			this.toggleVisible();
 			this.$input = this.$('.edit');
+			this.$select = this.$('.select-priority');
 			return this;
 		},
 
@@ -107,6 +109,11 @@ var app = app || {};
 			}
 
 			this.$el.removeClass('editing');
+		},
+
+		// 優先度が変更されたら、選択された優先度をmodelにセットして保存
+		changePriority: function () {
+			this.model.save('priority', this.$select.val());
 		},
 
 		// If you hit `enter`, we're through editing the item.

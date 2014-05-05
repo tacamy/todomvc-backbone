@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<title>Backbone.js • TodoMVC</title>
 		<link rel="stylesheet" href="bower_components/todomvc-common/base.css">
+		<link rel="stylesheet" href="css/todo.css">
 	</head>
 	<body>
 		<section id="todoapp">
@@ -24,12 +25,17 @@
 			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
 		<script type="text/template" id="item-template">
-			<div class="view">
+			<div class="view priority-<%- priority %>">
 				<input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
 				<label><%- title %></label>
 				<button class="destroy"></button>
 			</div>
 			<input class="edit" value="<%- title %>">
+			<select class="select-priority">
+				<% _.each(['high', 'middle', 'low'], function(val) { %>
+				<option value="<%- val %>" <%= priority === val ? 'selected' : '' %>><%- val %></option>
+				<% }); %>
+			</select>
 		</script>
 		<script type="text/template" id="stats-template">
 			<span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
@@ -48,7 +54,6 @@
 			<button id="clear-completed">Clear completed (<%= completed %>)</button>
 			<% } %>
 		</script>
-		<script src="bower_components/todomvc-common/base.js"></script>
 		<script src="bower_components/jquery/jquery.js"></script>
 		<script src="bower_components/underscore/underscore.js"></script>
 		<script src="bower_components/backbone/backbone.js"></script>
